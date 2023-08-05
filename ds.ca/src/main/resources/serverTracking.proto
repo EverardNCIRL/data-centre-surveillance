@@ -1,0 +1,33 @@
+syntax = "proto3"; //declare syntax
+
+option java_multiple_files = true;
+option java_package = "ServerTracking";//declare java package
+option java_outer_classname = "ServerTrackingServiceImpl";
+
+service ServerTrackingService {
+  rpc trackServer(ServerIDRequest) returns (ServerInfoResponse) {}//define API with wrapper and message
+  rpc getServerLocation(ServerIDRequest) returns (ServerLocationResponse) {}//define API with wrapper and message
+  rpc updateServerLocation(ServerLocationRequest) returns (ServerLocationResponse) {}//define API with wrapper and message
+}
+
+message ServerIDRequest {//keyword message, use request inside rpc parameters
+  string serverID = 1; //wrap input parameters
+}
+
+message ServerInfoResponse {//use API message as return type rpc parameters
+  string serverID = 1;
+  string location = 2;
+  string status = 3;
+  int64 timestamp = 4;
+}
+
+message ServerLocationResponse {
+  string serverID = 1;
+  string location = 2;
+  int64 timestamp = 3;
+}
+
+message ServerLocationRequest {
+  string serverID = 1;
+  string newLocation = 2;
+}

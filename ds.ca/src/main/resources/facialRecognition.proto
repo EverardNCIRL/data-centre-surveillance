@@ -1,0 +1,39 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "FacialRecognition";
+option java_outer_classname = "FacialRecognitionServiceImpl";
+
+service FacialRecognitionService {
+  rpc recogniseFace(stream ImageRequest) returns (RecognitionResponse) {}
+  rpc addPerson(PersonRequest) returns (Empty) {}
+  rpc deletePerson(PersonIDRequest) returns (Empty) {}
+}
+
+message ImageRequest {
+  bytes image = 1;
+}
+
+message RecognitionResponse {
+  repeated Face recognizedFaces = 1;
+  string errorMessage = 2;
+}
+
+message Face {
+  string personID = 1;
+  bytes image = 2;
+}
+
+message PersonRequest {
+  string personID = 1;
+  bytes image = 2;
+  int64 timestamp = 3;
+}
+
+message PersonIDRequest {
+  string personID = 1;
+}
+
+message Empty {
+
+}

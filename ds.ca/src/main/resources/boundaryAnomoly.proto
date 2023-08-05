@@ -1,0 +1,52 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "BoundaryAnomolyDetection";
+option java_outer_classname = "BADServiceImpl";
+
+service BoundaryAnomalyService {
+  rpc setBoundary(BoundaryRequest) returns (Empty) {}
+  rpc detectBoundaryAnomaly(stream AnomalyRequest) returns (stream AnomalyResponse) {}
+  rpc getAnomalyAuditTrail(AnomalyIDRequest) returns (stream AuditTrailResponse) {}
+  rpc overrideAlertStatus(OverrideRequest) returns (Empty) {}
+}
+
+message BoundaryRequest {
+  string boundaryID = 1;
+  string boundaryZone = 2;
+}
+
+message AnomalyRequest {
+  string anomalyID = 1;
+  bytes image = 2;
+  int64 timestamp = 3;
+}
+
+message AnomalyResponse {
+  string anomalyID = 1;
+  bool anomalyFlag = 2;
+  int64 timestamp = 3;
+}
+
+message AnomalyIDRequest {
+  string anomalyID = 1;
+}
+
+message AuditTrailResponse {
+  string anomalyID = 1;
+  bool anomalyFlag = 2;
+  int64 timestamp = 3;
+  string personID = 4;
+}
+
+message OverrideRequest {
+  string anomalyID = 1;
+  int32 reasonCode = 2;
+  string reasonExplained = 3;
+  int64 timestamp = 4;
+  string personID = 5;
+}
+
+message Empty {
+
+}
